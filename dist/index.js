@@ -29234,7 +29234,7 @@ exports.run = run;
 const core = __importStar(__nccwpck_require__(9093));
 const github = __importStar(__nccwpck_require__(5942));
 async function run() {
-    var _a, _b, _c;
+    var _a, _b, _c, _d, _e;
     try {
         const token = core.getInput("github-token", { required: true });
         const claEndpoint = core.getInput("cla-endpoint", { required: true });
@@ -29243,6 +29243,26 @@ async function run() {
         const context = github.context;
         const { owner, repo } = context.repo;
         const pullRequest = context.payload.pull_request;
+        if (!pullRequest) {
+            core.setFailed("This action can only be run on pull requests");
+            return;
+        }
+        const { data: pullRequests } = await octokit.rest.pulls.list({
+            owner,
+            repo,
+            state: "all",
+            creator: (_a = pullRequest === null || pullRequest === void 0 ? void 0 : pullRequest.user) === null || _a === void 0 ? void 0 : _a.login,
+        });
+        // const isFirstPRForUser = pullRequests.length === 1;
+        const isFirstPR = pullRequests.length > 1;
+        if (isFirstPR) {
+            await octokit.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: pullRequest.number,
+                body: `Welcome @${(_b = pullRequest.user) === null || _b === void 0 ? void 0 : _b.login}! Thank you for your first contribution to this project.`,
+            });
+        }
         core.debug(`CLA Endpoint: ${claEndpoint}`);
         core.debug(`CLA Link: ${claLink}`);
         core.debug(`Context: ${context}`);
@@ -29252,9 +29272,9 @@ async function run() {
         console.log(`Pull Request Number: ${pullRequest === null || pullRequest === void 0 ? void 0 : pullRequest.number}`);
         console.log(`Pull Request Title: ${pullRequest === null || pullRequest === void 0 ? void 0 : pullRequest.title}`);
         console.log(`Pull Request Body: ${pullRequest === null || pullRequest === void 0 ? void 0 : pullRequest.body}`);
-        console.log(`Pull Request Author: ${(_a = pullRequest === null || pullRequest === void 0 ? void 0 : pullRequest.user) === null || _a === void 0 ? void 0 : _a.login}`);
-        console.log(`Pull Request Author ID: ${(_b = pullRequest === null || pullRequest === void 0 ? void 0 : pullRequest.user) === null || _b === void 0 ? void 0 : _b.id}`);
-        console.log(`Pull Request Author Login: ${(_c = pullRequest === null || pullRequest === void 0 ? void 0 : pullRequest.user) === null || _c === void 0 ? void 0 : _c.login}`);
+        console.log(`Pull Request Author: ${(_c = pullRequest === null || pullRequest === void 0 ? void 0 : pullRequest.user) === null || _c === void 0 ? void 0 : _c.login}`);
+        console.log(`Pull Request Author ID: ${(_d = pullRequest === null || pullRequest === void 0 ? void 0 : pullRequest.user) === null || _d === void 0 ? void 0 : _d.id}`);
+        console.log(`Pull Request Author Login: ${(_e = pullRequest === null || pullRequest === void 0 ? void 0 : pullRequest.user) === null || _e === void 0 ? void 0 : _e.login}`);
         console.log("----------------------------------------");
         console.log(`Context: ${context.repo}`);
         console.log(`Context: ${context.repo.owner}`);

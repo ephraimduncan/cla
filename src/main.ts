@@ -12,6 +12,30 @@ export async function run(): Promise<void> {
     const { owner, repo } = context.repo;
     const pullRequest = context.payload.pull_request;
 
+    if (!pullRequest) {
+      core.setFailed("This action can only be run on pull requests");
+      return;
+    }
+
+    const { data: pullRequests } = await octokit.rest.pulls.list({
+      owner,
+      repo,
+      state: "all",
+      creator: pullRequest?.user?.login,
+    });
+
+    // const isFirstPRForUser = pullRequests.length === 1;
+    const isFirstPR = pullRequests.length > 1;
+
+    if (isFirstPR) {
+      await octokit.rest.issues.createComment({
+        owner,
+        repo,
+        issue_number: pullRequest.number,
+        body: `Welcome @${pullRequest.user?.login}! Thank you for your first contribution to this project.`,
+      });
+    }
+
     core.debug(`CLA Endpoint: ${claEndpoint}`);
     core.debug(`CLA Link: ${claLink}`);
     core.debug(`Context: ${context}`);
