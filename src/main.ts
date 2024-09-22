@@ -26,6 +26,7 @@ export async function run(): Promise<void> {
 
     // const isFirstPRForUser = pullRequests.length === 1;
     const isFirstPR = pullRequests.length > 1;
+    // dummy 3
 
     if (isFirstPR) {
       await octokit.rest.issues.createComment({
