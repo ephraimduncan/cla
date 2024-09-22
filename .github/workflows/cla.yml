@@ -1,0 +1,13 @@
+name: Documenso CLA
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  run-my-action:
+    name: Checks if contributor has signed the CLA
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./

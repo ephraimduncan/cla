@@ -1,0 +1,7 @@
+name: "Documenso Contributor License Agreement"
+description: "Check if contributor has signed the CLA"
+author: "Documenso"
+
+runs:
+  using: "node16"
+  main: "dist/index.js"
