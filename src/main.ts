@@ -1,16 +1,6 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
 
-export async function wait(milliseconds: number): Promise<string> {
-  return new Promise((resolve) => {
-    if (Number.isNaN(milliseconds)) {
-      throw new Error("milliseconds not a number");
-    }
-
-    setTimeout(() => resolve("done!"), milliseconds);
-  });
-}
-
 export async function run(): Promise<void> {
   try {
     const token = core.getInput("github-token", { required: true });
@@ -26,6 +16,15 @@ export async function run(): Promise<void> {
     core.debug(`CLA Link: ${claLink}`);
     core.debug(`Context: ${context}`);
     core.debug(`Pull Request: ${pullRequest}`);
+
+    console.log("Hello World");
+    console.log(`Pull Request: ${pullRequest}`);
+    console.log(`Owner: ${owner}`);
+    console.log(`Repo: ${repo}`);
+    console.log(`CLA Endpoint: ${claEndpoint}`);
+    console.log(`CLA Link: ${claLink}`);
+    console.log(`Context: ${context}`);
+    console.log(`Pull Request: ${pullRequest}`);
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message);
   }

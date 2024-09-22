@@ -29230,18 +29230,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.wait = wait;
 exports.run = run;
 const core = __importStar(__nccwpck_require__(9093));
 const github = __importStar(__nccwpck_require__(5942));
-async function wait(milliseconds) {
-    return new Promise((resolve) => {
-        if (Number.isNaN(milliseconds)) {
-            throw new Error("milliseconds not a number");
-        }
-        setTimeout(() => resolve("done!"), milliseconds);
-    });
-}
 async function run() {
     try {
         const token = core.getInput("github-token", { required: true });
@@ -29255,6 +29246,14 @@ async function run() {
         core.debug(`CLA Link: ${claLink}`);
         core.debug(`Context: ${context}`);
         core.debug(`Pull Request: ${pullRequest}`);
+        console.log("Hello World");
+        console.log(`Pull Request: ${pullRequest}`);
+        console.log(`Owner: ${owner}`);
+        console.log(`Repo: ${repo}`);
+        console.log(`CLA Endpoint: ${claEndpoint}`);
+        console.log(`CLA Link: ${claLink}`);
+        console.log(`Context: ${context}`);
+        console.log(`Pull Request: ${pullRequest}`);
     }
     catch (error) {
         if (error instanceof Error)
