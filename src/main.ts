@@ -19,6 +19,20 @@ export async function run(): Promise<void> {
 
     console.log("Hello World");
     console.log(`Pull Request: ${pullRequest}`);
+    console.log(`Pull Request Number: ${pullRequest?.number}`);
+    console.log(`Pull Request Title: ${pullRequest?.title}`);
+    console.log(`Pull Request Body: ${pullRequest?.body}`);
+    console.log(`Pull Request Author: ${pullRequest?.user?.login}`);
+    console.log(`Pull Request Author ID: ${pullRequest?.user?.id}`);
+    console.log(`Pull Request Author Login: ${pullRequest?.user?.login}`);
+
+    console.log("----------------------------------------");
+    console.log(`Context: ${context.repo}`);
+    console.log(`Context: ${context.repo.owner}`);
+    console.log(`Context: ${context.repo.repo}`);
+    console.log(`Context: ${context.repo.owner}`);
+    console.log("----------------------------------------");
+
     console.log(`Owner: ${owner}`);
     console.log(`Repo: ${repo}`);
     console.log(`CLA Endpoint: ${claEndpoint}`);

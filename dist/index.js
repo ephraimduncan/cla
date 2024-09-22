@@ -29234,6 +29234,7 @@ exports.run = run;
 const core = __importStar(__nccwpck_require__(9093));
 const github = __importStar(__nccwpck_require__(5942));
 async function run() {
+    var _a, _b, _c;
     try {
         const token = core.getInput("github-token", { required: true });
         const claEndpoint = core.getInput("cla-endpoint", { required: true });
@@ -29248,6 +29249,18 @@ async function run() {
         core.debug(`Pull Request: ${pullRequest}`);
         console.log("Hello World");
         console.log(`Pull Request: ${pullRequest}`);
+        console.log(`Pull Request Number: ${pullRequest === null || pullRequest === void 0 ? void 0 : pullRequest.number}`);
+        console.log(`Pull Request Title: ${pullRequest === null || pullRequest === void 0 ? void 0 : pullRequest.title}`);
+        console.log(`Pull Request Body: ${pullRequest === null || pullRequest === void 0 ? void 0 : pullRequest.body}`);
+        console.log(`Pull Request Author: ${(_a = pullRequest === null || pullRequest === void 0 ? void 0 : pullRequest.user) === null || _a === void 0 ? void 0 : _a.login}`);
+        console.log(`Pull Request Author ID: ${(_b = pullRequest === null || pullRequest === void 0 ? void 0 : pullRequest.user) === null || _b === void 0 ? void 0 : _b.id}`);
+        console.log(`Pull Request Author Login: ${(_c = pullRequest === null || pullRequest === void 0 ? void 0 : pullRequest.user) === null || _c === void 0 ? void 0 : _c.login}`);
+        console.log("----------------------------------------");
+        console.log(`Context: ${context.repo}`);
+        console.log(`Context: ${context.repo.owner}`);
+        console.log(`Context: ${context.repo.repo}`);
+        console.log(`Context: ${context.repo.owner}`);
+        console.log("----------------------------------------");
         console.log(`Owner: ${owner}`);
         console.log(`Repo: ${repo}`);
         console.log(`CLA Endpoint: ${claEndpoint}`);
