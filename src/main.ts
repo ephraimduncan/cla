@@ -1,4 +1,5 @@
 import * as core from "@actions/core";
+import * as github from "@actions/github";
 
 export async function wait(milliseconds: number): Promise<string> {
   return new Promise((resolve) => {
@@ -12,15 +13,19 @@ export async function wait(milliseconds: number): Promise<string> {
 
 export async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput("milliseconds");
+    const token = core.getInput("github-token", { required: true });
+    const claEndpoint = core.getInput("cla-endpoint", { required: true });
+    const claLink = core.getInput("cla-link", { required: true });
 
-    core.debug(`Waiting ${ms} milliseconds ...`);
+    const octokit = github.getOctokit(token);
+    const context = github.context;
+    const { owner, repo } = context.repo;
+    const pullRequest = context.payload.pull_request;
 
-    core.debug(new Date().toTimeString());
-    await wait(Number.parseInt(ms, 10));
-    core.debug(new Date().toTimeString());
-
-    core.setOutput("time", new Date().toTimeString());
+    core.debug(`CLA Endpoint: ${claEndpoint}`);
+    core.debug(`CLA Link: ${claLink}`);
+    core.debug(`Context: ${context}`);
+    core.debug(`Pull Request: ${pullRequest}`);
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message);
   }

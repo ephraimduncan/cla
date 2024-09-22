@@ -8,19 +8,15 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
-  CLA:
+  cla-check:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        id: checkout
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Test Local Action
-        id: test-action
+      - name: Run CLA check
         uses: ./
         with:
-          milliseconds: 1000
-
-      - name: Print Output
-        id: output
-        run: echo "${{ steps.test-action.outputs.time }}"
+          github-token: ${{ secrets.CLA_GITHUB_TOKEN }}
+          cla-endpoint: ${{ secrets.CLA_ENDPOINT }}
+          cla-link: ${{ secrets.CLA_LINK }}

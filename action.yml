@@ -11,11 +11,12 @@ branding:
   color: "red"
 
 inputs:
-  milliseconds:
-    description: "The number of milliseconds to wait"
+  github-token:
+    description: "GitHub token"
     required: true
-    default: "1000"
-
-outputs:
-  time:
-    description: "The time in milliseconds"
+  cla-endpoint:
+    description: "Endpoint to check CLA status"
+    required: true
+  cla-link:
+    description: "Link to sign the CLA"
+    required: true
